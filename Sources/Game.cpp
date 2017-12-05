@@ -16,7 +16,6 @@ Vector2 cannonPos;      //!< 砲台の位置
 Vector2 bulletPos;      //!< 弾の位置
 Rect    targetRect;     //!< ターゲットの矩形
 int     score;          //!< スコア
-int     flag=0;
 
 
 // ゲーム開始時に呼ばれる関数です。
@@ -32,13 +31,6 @@ void Start()
 // 1/60秒ごとに呼ばれる関数です。モデルの更新と画面の描画を行います。
 void Update()
 {
-    //雲の移動
-    if (cloudPos.x < 310) {
-        cloudPos.x += 50 * Time::deltaTime;
-    }else{
-        cloudPos.x =-550;
-    }
-    
     // 弾の発射
     if (bulletPos.x <= -999 && Input::GetKeyDown(KeyMask::Space)) {
         bulletPos = cannonPos + Vector2(50, 10);
@@ -60,21 +52,6 @@ void Update()
         }
     }
 
-    //砲台の移動
-    if(cannonPos.y < -75&&(flag==0||flag==2)){
-        flag=0;
-    }else if(cannonPos.y>-85&&(flag==0||flag==2)){
-        flag=1;
-    }else if(cannonPos.y<-145){
-        flag=2;
-    }
-    if (flag==0||flag==2){
-        cannonPos.y += 50 * Time::deltaTime;
-    }else{
-        cannonPos.y -= 50 * Time::deltaTime;
-    }
-
-    
     // 背景の描画
     Clear(Color::cyan);
     FillRect(Rect(-320, -240, 640, 100), Color::green);
